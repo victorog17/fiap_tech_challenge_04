@@ -89,7 +89,7 @@ def main():
     scaled_test_data = scaler.transform(test_data[feature_columns])
 
     # Salvar o scaler após o preprocessamento
-    save_scaler_torch(scaler, "../../result/models/saved/scaler.pt")
+    save_scaler_torch(scaler, f"result/models/saved/scaler_{params['yfinance_ticker']}.pt")
 
     # Prepare sequences
     train_sequences, train_targets = create_sequences(scaled_train_data, params["seq_length"])
@@ -139,7 +139,7 @@ def main():
         early_stopping_patience=params["early_stopping_patience"]
     )
 
-    save_model_local(trained_model, path="../../result/models/saved/trained_model.pth")
+    save_model_local(trained_model, path=f"result/models/saved/trained_model_{params['yfinance_ticker']}.pth")
 
     # Evaluate model
     train_preds, val_preds, actual = evaluate_model(trained_model, X_train, y_train, X_test, y_test, scaler)
